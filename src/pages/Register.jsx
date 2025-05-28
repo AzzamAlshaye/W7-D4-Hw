@@ -169,8 +169,13 @@ export default function Register() {
                 disabled={isSubmitting}
                 className="w-full py-2 bg-neutral-900 text-white font-semibold rounded-lg hover:bg-neutral-800 transition disabled:opacity-50"
               >
-                {isSubmitting ? "Signing Up..." : "Sign Up"}
+                {isSubmitting ? "Registring ..." : "Register"}
               </button>
+              <Link to="/">
+                <button className="w-full py-2 bg-neutral-600 text-neutral-100 font-semibold rounded-lg hover:bg-neutral-400 hover:text-neutral-800  transition">
+                  Home
+                </button>
+              </Link>
             </Form>
           )}
         </Formik>

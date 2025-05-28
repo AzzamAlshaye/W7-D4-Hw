@@ -120,12 +120,17 @@ export default function LoginPage() {
               >
                 {isSubmitting ? "Logging In..." : "Log In"}
               </button>
+              <Link to="/">
+                <button className="w-full py-2 bg-neutral-600 text-neutral-100 font-semibold rounded-lg hover:bg-neutral-400 hover:text-neutral-800  transition">
+                  Home
+                </button>
+              </Link>
             </Form>
           )}
         </Formik>
 
         <p className="mt-6 text-center text-neutral-800">
-          Don’t have an account?{" "}
+          Don’t have an account?
           <Link
             to="/register"
             className="text-neutral-900 font-medium hover:underline"
