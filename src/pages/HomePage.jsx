@@ -15,7 +15,7 @@ export default function HomePage() {
 
         {/* Foreground content */}
         <div className="relative z-10 flex flex-col items-center space-y-6 text-center">
-          <h1 className="text-5xl font-bold">The Characters API</h1>
+          <h1 className="text-5xl font-bold ">The Characters API</h1>
           <p className="text-lg max-w-2xl text-neutral-500">
             This website showcases characters from all TV media, including their
             names, images, and gender.

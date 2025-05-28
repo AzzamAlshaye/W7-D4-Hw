@@ -350,7 +350,7 @@ export default function CharactersList() {
                     <div className="flex justify-center space-x-4 mt-4">
                       <FiEdit
                         size={20}
-                        className="cursor-pointer text-neutral-800 hover:text-neutral-600"
+                        className="cursor-pointer text-neutral-800 hover:text-yellow-800 transition"
                         onClick={() => handleEdit(char)}
                       />
                       <FiTrash
