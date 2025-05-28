@@ -22,7 +22,7 @@ export default function HomePage() {
           </p>
           <Link
             to="/characters"
-            className="inline-block mt-4 bg-neutral-100 hover:bg-neutral-50 hover:text-neutral-900 text-black font-semibold py-3 px-6 rounded-lg transition"
+            className="inline-block mt-4 bg-neutral-900 hover:bg-neutral-800 hover:text-neutral-100 text-neutral-200 font-semibold py-3 px-6 rounded-lg transition"
           >
             Check Characters
           </Link>
