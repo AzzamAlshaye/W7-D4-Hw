@@ -140,6 +140,52 @@ export default function CharactersList() {
             onClick={handlePlusClick}
           />
         </div>
+        {showForm && (
+          <div
+            ref={formRef}
+            className="mb-16 bg-white shadow-lg rounded-xl p-8 max-w-xl mx-auto"
+          >
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+              {isEditing ? "Edit Character" : "Add New Character"}
+            </h2>
+            <div className="grid grid-cols-1 gap-4">
+              <input
+                type="text"
+                placeholder="Name"
+                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={newCharacter.name}
+                onChange={(e) =>
+                  setNewCharacter({ ...newCharacter, name: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Image URL"
+                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={newCharacter.image}
+                onChange={(e) =>
+                  setNewCharacter({ ...newCharacter, image: e.target.value })
+                }
+              />
+              <select
+                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={newCharacter.gender}
+                onChange={(e) =>
+                  setNewCharacter({ ...newCharacter, gender: e.target.value })
+                }
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <button
+                onClick={handleSubmit}
+                className="mt-4 bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"
+              >
+                {isEditing ? "Save Changes" : "Add Character"}
+              </button>
+            </div>
+          </div>
+        )}
 
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -182,53 +228,6 @@ export default function CharactersList() {
           <p className="text-center text-red-500 text-lg mt-6">
             Oops! No characters found.
           </p>
-        )}
-
-        {showForm && (
-          <div
-            ref={formRef}
-            className="mt-16 bg-white shadow-lg rounded-xl p-8 max-w-xl mx-auto"
-          >
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-              {isEditing ? "Edit Character" : "Add New Character"}
-            </h2>
-            <div className="grid grid-cols-1 gap-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={newCharacter.name}
-                onChange={(e) =>
-                  setNewCharacter({ ...newCharacter, name: e.target.value })
-                }
-              />
-              <input
-                type="text"
-                placeholder="Image URL"
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={newCharacter.image}
-                onChange={(e) =>
-                  setNewCharacter({ ...newCharacter, image: e.target.value })
-                }
-              />
-              <select
-                className="border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                value={newCharacter.gender}
-                onChange={(e) =>
-                  setNewCharacter({ ...newCharacter, gender: e.target.value })
-                }
-              >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-              </select>
-              <button
-                onClick={handleSubmit}
-                className="mt-4 bg-indigo-600 text-white font-semibold py-3 rounded-lg hover:bg-indigo-700 transition"
-              >
-                {isEditing ? "Save Changes" : "Add Character"}
-              </button>
-            </div>
-          </div>
         )}
       </div>
     </div>
