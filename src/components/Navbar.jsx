@@ -15,14 +15,14 @@ export default function Navbar() {
     const isAuth = localStorage.getItem("isAuthenticated") === "true";
     setAuth(isAuth);
     if (isAuth) {
-      const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
-      setUserName(storedUser.fullName || "");
+      const fullName = localStorage.getItem("fullName");
+      setUserName(fullName || "");
     }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user");
+    localStorage.removeItem("fullName");
     setAuth(false);
     navigate("/login");
   };
@@ -72,11 +72,11 @@ export default function Navbar() {
           ) : (
             <>
               <span className="block px-6 py-3 font-medium text-black">
-                {userName}
+                {`Welcome , ${userName}`}
               </span>
               <button
                 onClick={handleLogout}
-                className="block px-6 py-3 font-medium rounded-md text-black hover:bg-neutral-900 hover:text-white"
+                className="block px-6 py-3 font-medium rounded-md text-black hover:bg-neutral-900 hover:text-white border"
               >
                 Logout
               </button>
@@ -141,15 +141,15 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <span className="px-6 py-3 font-medium text-black">
-                {userName}
+              <span className="px-3 py-3 font-medium text-black">
+                {`Welcome , ${userName}`}
               </span>
               <button
                 onClick={() => {
                   handleLogout();
                   setMenuOpen(false);
                 }}
-                className="px-6 py-3 font-medium rounded-md text-black hover:bg-neutral-900 hover:text-white"
+                className="px-6 py-3 font-medium rounded-md text-black hover:bg-neutral-900 hover:text-white border"
               >
                 Logout
               </button>
