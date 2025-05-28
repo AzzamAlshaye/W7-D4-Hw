@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FiSearch, FiPlus, FiX, FiEdit, FiTrash } from "react-icons/fi";
 import { BiWorld } from "react-icons/bi";
+import { IoMdMale, IoMdFemale } from "react-icons/io";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,6 +21,7 @@ export default function CharactersList() {
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
   const [showMine, setShowMine] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const formRef = useRef(null);
 
   const API_URL = "https://68370703664e72d28e432cf6.mockapi.io/Characters";
@@ -59,7 +61,14 @@ export default function CharactersList() {
   };
 
   const handleSubmit = () => {
-    if (!isAuth) return toast.error("You must be logged in");
+    if (!isAuth) {
+      toast.error("You must be logged in");
+      return;
+    }
+    if (submitting) {
+      return;
+    }
+
     const { name, image, gender, world } = newCharacter;
     if (!name.trim()) return toast.error("Name is required");
     if (!image.trim()) return toast.error("Image URL is required");
@@ -71,10 +80,9 @@ export default function CharactersList() {
     if (!world.trim()) return toast.error("World is required");
 
     const payload = { name, image, gender, world, owner: userEmail };
+    setSubmitting(true);
+
     if (isEditing) {
-      const orig = characters.find((c) => c.id === editId);
-      if (!orig || orig.owner !== userEmail)
-        return toast.error("You can only edit your own characters");
       axios
         .put(`${API_URL}/${editId}`, payload)
         .then((res) => {
@@ -85,7 +93,8 @@ export default function CharactersList() {
           resetForm();
           setShowForm(false);
         })
-        .catch(() => toast.error("Failed to update character"));
+        .catch(() => toast.error("Failed to update character"))
+        .finally(() => setSubmitting(false));
     } else {
       axios
         .post(API_URL, payload)
@@ -95,13 +104,15 @@ export default function CharactersList() {
           resetForm();
           setShowForm(false);
         })
-        .catch(() => toast.error("Failed to add character"));
+        .catch(() => toast.error("Failed to add character"))
+        .finally(() => setSubmitting(false));
     }
   };
 
   const handleEdit = (char) => {
-    if (!isAuth || char.owner !== userEmail)
+    if (!isAuth || char.owner !== userEmail) {
       return toast.error("You can only edit your own characters");
+    }
     setNewCharacter({
       name: char.name,
       image: char.image,
@@ -117,10 +128,10 @@ export default function CharactersList() {
     );
   };
 
-  // Updated handleDelete using react-toastify for confirmation
   const handleDelete = (char) => {
-    if (!isAuth || char.owner !== userEmail)
+    if (!isAuth || char.owner !== userEmail) {
       return toast.error("You can only delete your own characters");
+    }
     const toastId = toast(
       ({ closeToast }) => (
         <div className="p-4">
@@ -179,6 +190,7 @@ export default function CharactersList() {
     <div className="min-h-screen bg-neutral-50 py-12 px-4">
       <ToastContainer position="top-center" autoClose={3000} />
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <header className="text-center mb-10">
           <h1 className="text-5xl font-extrabold text-neutral-900">
             Character Gallery
@@ -190,6 +202,7 @@ export default function CharactersList() {
           </p>
         </header>
 
+        {/* Controls */}
         <div className="flex flex-col sm:flex-row items-center justify-between mb-8 space-y-4 sm:space-y-0">
           <div className="relative w-full sm:w-1/3">
             <FiSearch className="absolute top-1/2 left-3 transform -translate-y-1/2 text-neutral-400" />
@@ -226,6 +239,7 @@ export default function CharactersList() {
           </div>
         </div>
 
+        {/* Form */}
         {showForm && (
           <div
             ref={formRef}
@@ -274,14 +288,26 @@ export default function CharactersList() {
               />
               <button
                 onClick={handleSubmit}
-                className="w-full py-3 bg-neutral-800 text-white font-semibold rounded-lg hover:bg-neutral-900 transition"
+                disabled={submitting}
+                className={`w-full py-3 text-white font-semibold rounded-lg transition ${
+                  submitting
+                    ? "bg-neutral-500 cursor-not-allowed"
+                    : "bg-neutral-800 hover:bg-neutral-900"
+                }`}
               >
-                {isEditing ? "Save Changes" : "Add Character"}
+                {submitting
+                  ? isEditing
+                    ? "Saving..."
+                    : "Adding..."
+                  : isEditing
+                  ? "Save Changes"
+                  : "Add Character"}
               </button>
             </div>
           </div>
         )}
 
+        {/* Grid */}
         {filtered.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {filtered.map((char) => (
@@ -305,8 +331,13 @@ export default function CharactersList() {
                       char.gender === "male"
                         ? "bg-neutral-200 text-neutral-800"
                         : "bg-neutral-700 text-white"
-                    }`}
+                    } flex items-center justify-center`}
                   >
+                    {char.gender === "male" ? (
+                      <IoMdMale className="inline-block mr-1" />
+                    ) : (
+                      <IoMdFemale className="inline-block mr-1" />
+                    )}
                     {char.gender}
                   </span>
                   {char.world && (

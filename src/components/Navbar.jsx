@@ -28,19 +28,19 @@ export default function Navbar() {
     navigate("/login");
   };
 
-  const linkClass = (path) => `block px-6 py-3 font-medium rounded-md transition
-     ${
-       pathname === path
-         ? "bg-black text-white"
-         : "text-black hover:bg-neutral-900 hover:text-white"
-     }`;
+  const linkClass = (path) =>
+    `block px-6 py-3 font-medium rounded-md transition ${
+      pathname === path
+        ? "bg-white text-black"
+        : "text-white hover:bg-neutral-200 hover:text-black"
+    }`;
 
   return (
-    <nav className="bg-neutral-200 shadow-md">
+    <nav className="bg-neutral-800 text-white shadow-md">
       <div className="container-xl mx-auto flex items-center justify-between lg:justify-start gap-4 lg:gap-10 p-4">
         {/* Branding */}
         <Link to="/" className="flex items-center space-x-2">
-          <img src="logo.svg" alt="Logo" className="h-10" />
+          <img src="logo.w.svg" alt="Logo" className="h-10  " />
         </Link>
 
         {/* Desktop nav links */}
@@ -59,25 +59,25 @@ export default function Navbar() {
             <>
               <Link
                 to="/register"
-                className="block px-6 py-3 font-medium rounded-md transition bg-black text-white "
+                className="block px-6 py-3 font-medium rounded-md transition bg-white text-black hover:bg-neutral-200 hover:text-neutral-800 hover:scale-101"
               >
                 Register
               </Link>
               <Link
                 to="/login"
-                className="block px-6 py-3 font-medium rounded-md transition bg-neutral-500 text-white "
+                className="block px-6 py-3 font-medium rounded-md transition bg-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 text-white hover:scale-101"
               >
                 Login
               </Link>
             </>
           ) : (
             <>
-              <span className="block px-6 py-3 font-medium text-black">
-                {`Welcome , ${userName}`}
+              <span className="block px-6 py-3 font-medium text-white">
+                {`Welcome, ${userName}`}
               </span>
               <button
                 onClick={handleLogout}
-                className="block px-6 py-3 font-medium rounded-md text-black hover:bg-neutral-900 hover:text-white border"
+                className="block px-6 py-3 font-medium rounded-md text-white border border-white hover:bg-white hover:text-black"
               >
                 Logout
               </button>
@@ -88,7 +88,7 @@ export default function Navbar() {
         {/* Mobile burger */}
         <button
           onClick={() => setMenuOpen((o) => !o)}
-          className="lg:hidden focus:outline-none text-black"
+          className="lg:hidden focus:outline-none text-white"
         >
           {menuOpen ? <IoClose size={28} /> : <IoMenu size={28} />}
         </button>
@@ -96,7 +96,7 @@ export default function Navbar() {
 
       {/* Mobile dropdown */}
       <div
-        className={`lg:hidden bg-neutral-200 overflow-hidden transition-[max-height] duration-300 ${
+        className={`lg:hidden bg-neutral-900 overflow-hidden transition-[max-height] duration-300 ${
           menuOpen ? "max-h-screen" : "max-h-0"
         }`}
       >
@@ -128,29 +128,29 @@ export default function Navbar() {
               <Link
                 to="/register"
                 onClick={() => setMenuOpen(false)}
-                className="block px-6 py-3 font-medium rounded-md transition bg-black text-white "
+                className="block px-6 py-3 font-medium rounded-md transition bg-white text-black"
               >
                 Register
               </Link>
               <Link
                 to="/login"
                 onClick={() => setMenuOpen(false)}
-                className="block px-6 py-3 font-medium rounded-md transition bg-neutral-700 text-white "
+                className="block px-6 py-3 font-medium rounded-md transition bg-neutral-300 text-black"
               >
                 Login
               </Link>
             </>
           ) : (
             <>
-              <span className="px-3 py-3 font-medium text-black">
-                {`Welcome , ${userName}`}
+              <span className="px-3 py-3 font-medium text-white">
+                {`Welcome, ${userName}`}
               </span>
               <button
                 onClick={() => {
                   handleLogout();
                   setMenuOpen(false);
                 }}
-                className="px-6 py-3 font-medium rounded-md text-black hover:bg-neutral-900 hover:text-white border"
+                className="px-6 py-3 font-medium rounded-md text-white border border-white hover:bg-white hover:text-black"
               >
                 Logout
               </button>
